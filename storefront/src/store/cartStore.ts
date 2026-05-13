@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create, StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface CartItem {
@@ -23,50 +23,53 @@ interface CartState {
   getCartTotal: () => number;
 }
 
-export const useCartStore = create<CartState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      isOpen: false,
-      
-      addItem: (item) => {
-        set((state) => {
-          const existingItem = state.items.find((i) => i.id === item.id);
-          if (existingItem) {
-            return {
-              items: state.items.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
-              ),
-              isOpen: true, // open cart when adding
-            };
-          }
-          return { items: [...state.items, item], isOpen: true };
-        });
-      },
+const createCartState: StateCreator<CartState> = (set, get) => ({
+  items: [],
+  isOpen: false,
 
-      removeItem: (id) => {
-        set((state) => ({
-          items: state.items.filter((i) => i.id !== id),
-        }));
-      },
+  addItem: (item: CartItem) => {
+    set((state: CartState) => {
+      const existingItem = state.items.find((i) => i.id === item.id);
+      if (existingItem) {
+        return {
+          items: state.items.map((i) =>
+            i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+          ),
+          isOpen: true,
+        };
+      }
+      return { items: [...state.items, item], isOpen: true };
+    });
+  },
 
-      updateQuantity: (id, quantity) => {
-        set((state) => ({
-          items: state.items.map((i) => (i.id === id ? { ...i, quantity } : i)),
-        }));
-      },
+  removeItem: (id: string) => {
+    set((state: CartState) => ({
+      items: state.items.filter((i) => i.id !== id),
+    }));
+  },
 
-      toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
-      
-      clearCart: () => set({ items: [] }),
+  updateQuantity: (id: string, quantity: number) => {
+    set((state: CartState) => ({
+      items: state.items.map((i) => (i.id === id ? { ...i, quantity } : i)),
+    }));
+  },
 
-      getCartTotal: () => {
-        return get().items.reduce((total, item) => total + item.price * item.quantity, 0);
-      },
-    }),
-    {
-      name: 'lawless-cart-storage',
-      partialize: (state) => ({ items: state.items }), // Only persist items, not isOpen
-    }
-  )
-);
+  toggleCart: () => set((state: CartState) => ({ isOpen: !state.isOpen })),
+
+  clearCart: () => set({ items: [] }),
+
+  getCartTotal: () => {
+    return get().items.reduce((total: number, item: CartItem) => total + item.price * item.quantity, 0);
+  },
+});
+
+const isBrowser = typeof window !== 'undefined';
+
+export const useCartStore = isBrowser
+  ? create<CartState>()(
+      persist(createCartState, {
+        name: 'lawless-cart-storage',
+        partialize: (state) => ({ items: state.items }),
+      })
+    )
+  : create<CartState>()(createCartState);
