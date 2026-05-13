@@ -1,13 +1,13 @@
-import Header from '@/components/Header';
-import dynamic from 'next/dynamic';
+'use client';
 
-const CheckoutClient = dynamic(() => import('@/components/CheckoutClient'), {
-  ssr: false,
-});
+import Header from '@/components/Header';
+import CheckoutClient from '@/components/CheckoutClient';
+import Script from 'next/script';
 
 export default function CheckoutPage() {
   return (
     <>
+      <Script src="https://js.paystack.co/v1/inline.js" strategy="lazyOnload" />
       <Header />
       <main className="container mx-auto px-4 py-12 md:py-20 flex-grow">
         <div className="mb-12">

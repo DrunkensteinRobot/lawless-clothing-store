@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cartStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { usePaystackPayment } from 'react-paystack';
 
 export default function CheckoutClient() {
   const router = useRouter();
@@ -36,6 +35,8 @@ export default function CheckoutClient() {
     }));
   };
 
+  const isBrowser = typeof window !== 'undefined';
+
   const handleWhatsAppOrder = () => {
     if (!formData.firstName || !formData.email || !formData.phone || !formData.address || !formData.city) {
       alert("Please fill in all required delivery details before ordering.");
@@ -57,7 +58,12 @@ export default function CheckoutClient() {
 
     const targetNumber = '27646500672';
     const whatsappUrl = `https://wa.me/${targetNumber}?text=${encodeURIComponent(message)}`;
-    
+
+    if (!isBrowser) {
+      console.warn('Unable to open WhatsApp on server.');
+      return;
+    }
+
     window.open(whatsappUrl, '_blank');
   };
 
@@ -83,7 +89,33 @@ export default function CheckoutClient() {
     }
   };
 
-  const initializePayment = usePaystackPayment(config);
+  const initializePayment = () => {
+    if (!isBrowser) {
+      console.warn('Paystack payment cannot be initialized on the server.');
+      return;
+    }
+
+    const PaystackPop = (window as any).PaystackPop;
+    if (!PaystackPop) {
+      alert('Paystack is not loaded yet. Please try again in a moment.');
+      return;
+    }
+
+    const handler = PaystackPop.setup({
+      key: config.publicKey,
+      email: config.email,
+      amount: config.amount,
+      ref: config.reference,
+      metadata: config.metadata,
+      callback: function(response: any) {
+        onSuccess(response);
+      },
+      onClose: function() {
+        onClose();
+      }
+    });
+    handler.openIframe();
+  };
 
   const onSuccess = async (reference: any) => {
     setIsProcessing(true);
@@ -131,7 +163,7 @@ export default function CheckoutClient() {
       return;
     }
 
-    initializePayment({onSuccess, onClose});
+    initializePayment();
   };
 
   if (!mounted) return null;
