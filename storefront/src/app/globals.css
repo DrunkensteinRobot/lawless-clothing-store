@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0D0D0D;
+  --background-secondary: #1A1A1A;
+  --foreground: #FFFFFF;
+  --foreground-secondary: #9CA3AF;
+  --accent: #C0392B;
+  --accent-hover: #E74C3C;
+  --border: #2D2D2D;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  
+  --font-heading: var(--font-bebas-neue);
+  --font-body: var(--font-inter);
+  --font-accent: var(--font-space-grotesk);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: pan-y;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve tap target sizes for mobile */
+button,
+a {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+}
+
+/* Optimize scrolling performance */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure proper viewport for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+}
