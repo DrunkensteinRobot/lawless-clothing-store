@@ -106,6 +106,7 @@ export default function CheckoutClient() {
       key: config.publicKey,
       email: config.email,
       amount: config.amount,
+      currency: config.currency,
       ref: config.reference,
       metadata: config.metadata,
       callback: function(response: any) {
