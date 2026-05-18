@@ -71,7 +71,8 @@ export default function CheckoutClient() {
   const config = {
     reference: `REF-${new Date().getTime().toString()}`,
     email: formData.email,
-    amount: getCartTotal() * 100, // Paystack expects lowest currency unit (cents/kobo)
+    amount: Math.round(getCartTotal() * 100), // Paystack expects lowest currency unit (cents/kobo)
+    currency: 'ZAR',
     publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string,
     metadata: {
       custom_fields: [
@@ -155,6 +156,12 @@ export default function CheckoutClient() {
   const handleWebPayment = () => {
     if (!formData.firstName || !formData.email || !formData.phone || !formData.address || !formData.city) {
       alert("Please fill in all required delivery details before ordering.");
+      return;
+    }
+
+    const amount = Math.round(getCartTotal() * 100);
+    if (amount <= 0) {
+      alert("Cart total must be greater than zero to start checkout.");
       return;
     }
     
