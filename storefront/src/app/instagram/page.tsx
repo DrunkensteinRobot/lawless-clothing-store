@@ -9,6 +9,8 @@ export const metadata = {
   description: 'Follow our latest designs and street style inspiration on Instagram',
 };
 
+export const revalidate = 0;
+
 export default async function InstagramPage() {
   const posts = await client.fetch(instagramPostsQuery);
   const displayPosts = posts.map((post: any) => ({
