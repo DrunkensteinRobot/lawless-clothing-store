@@ -71,14 +71,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[#9CA3AF] hover:text-white transition-colors text-sm">
+                <Link href="/returns" className="text-[#9CA3AF] hover:text-white transition-colors text-sm">
                   Returns
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-[#9CA3AF] hover:text-white transition-colors text-sm">
+                <Link href="/shipping" className="text-[#9CA3AF] hover:text-white transition-colors text-sm">
                   Shipping
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
