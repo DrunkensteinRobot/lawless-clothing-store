@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -32,8 +33,14 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
-          <div>
-            <h3 className="font-heading text-2xl tracking-wider text-white mb-2">LAWLESS</h3>
+          <div className="flex flex-col items-start">
+            <Image 
+              src="/logo.png" 
+              alt="Lawless Clothing" 
+              width={160} 
+              height={45} 
+              className="w-36 h-auto object-contain mb-4"
+            />
             <p className="text-[#9CA3AF] text-sm font-sans">Be Fearless. Be Lawless.</p>
           </div>
 

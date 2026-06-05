@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useCartStore } from '@/store/cartStore';
 import CartDrawer from './CartDrawer';
@@ -25,9 +26,15 @@ export default function Header() {
       <header className="sticky top-0 z-50 w-full bg-[#0D0D0D]/80 backdrop-blur-md border-b border-[#2D2D2D]">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="font-heading text-2xl sm:text-3xl md:text-4xl tracking-wider text-white relative group flex-shrink-0">
-            LAWLESS
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C0392B] transition-all duration-300 group-hover:w-full"></span>
+          <Link href="/" className="relative flex-shrink-0 flex items-center pt-2">
+            <Image 
+              src="/logo.png" 
+              alt="Lawless Clothing" 
+              width={180} 
+              height={50} 
+              className="w-32 md:w-44 h-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}
