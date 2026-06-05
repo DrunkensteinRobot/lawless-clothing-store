@@ -43,7 +43,8 @@ export const allProductsQuery = groq`
     "imageUrl": images[0].asset->url,
     isNewArrival,
     isBestSeller,
-    stock
+    stock,
+    "categorySlug": category->slug.current
   }
 `;
 

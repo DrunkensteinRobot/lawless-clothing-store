@@ -12,14 +12,9 @@ export default function CollectionsFilterClient({ products, categories }: { prod
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory ? product.categorySlug === selectedCategory : true;
       
-      // Note: In a real app we'd need to fetch category refs from products to match by category slug.
-      // Since our allProductsQuery doesn't fetch category slug yet, we will just use search for now,
-      // or filter if we update the query. For this implementation we'll assume we filter by category if we add it.
-      // For now, if a category is selected, we filter (assuming product.category exists, but we didn't query it).
-      // We will rely on search mainly, and leave category as a UI placeholder or filter if we map it.
-      
-      return matchesSearch;
+      return matchesSearch && matchesCategory;
     });
   }, [products, searchQuery, selectedCategory]);
 
