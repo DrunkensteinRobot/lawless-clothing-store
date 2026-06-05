@@ -15,7 +15,7 @@ export default async function InstagramPage() {
     id: post._id,
     image: post.imageUrl,
     caption: post.caption,
-    link: post.instagramUrl || 'https://instagram.com/lawlessclothing',
+    link: post.instagramUrl || 'https://www.instagram.com/lawless_clothing_v?igsh=MTlzdHU0bmlzeWRkbQ%3D%3D&utm_source=qr',
   }));
 
   return (
@@ -38,7 +38,7 @@ export default async function InstagramPage() {
                 Follow our latest designs, street style inspiration, and exclusive drops
               </p>
               <a
-                href="https://instagram.com/lawlessclothing"
+                href="https://www.instagram.com/lawless_clothing_v?igsh=MTlzdHU0bmlzeWRkbQ%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-6 px-8 py-3 bg-[#C0392B] text-white font-bold uppercase tracking-wider hover:bg-[#E74C3C] transition-colors"
@@ -57,18 +57,18 @@ export default async function InstagramPage() {
             <div className="rounded-3xl border border-[#2D2D2D] bg-[#111111] p-12 text-center">
               <p className="text-[#9CA3AF] uppercase tracking-[0.25em] text-xs mb-4">Instagram Feed</p>
               <h2 className="font-heading text-3xl md:text-4xl text-white mb-4">
-                No posts yet.
+                Loading fresh drops...
               </h2>
               <p className="text-[#B0B5BB] max-w-2xl mx-auto mb-8">
-                We’re getting the gallery ready. Publish your first Instagram post in Sanity and it will appear here automatically.
+                We're currently curating our gallery. Follow us on Instagram to see the latest updates and exclusive drops right as they happen.
               </p>
               <a
-                href="https://your-sanity-studio-url"
+                href="https://www.instagram.com/lawless_clothing_v?igsh=MTlzdHU0bmlzeWRkbQ%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-[#C0392B] bg-transparent px-6 py-3 text-sm font-semibold uppercase tracking-wider text-[#C0392B] transition hover:bg-[#C0392B] hover:text-white"
               >
-                Open Sanity Studio
+                Go to our Instagram
               </a>
             </div>
           )}
@@ -84,7 +84,7 @@ export default async function InstagramPage() {
               Use #lawlessclothing to feature your style on our feed
             </p>
             <a
-              href="https://instagram.com/lawlessclothing"
+              href="https://www.instagram.com/lawless_clothing_v?igsh=MTlzdHU0bmlzeWRkbQ%3D%3D&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-6 py-2 border border-[#C0392B] text-[#C0392B] font-bold uppercase tracking-wider hover:bg-[#C0392B] hover:text-white transition-colors"
