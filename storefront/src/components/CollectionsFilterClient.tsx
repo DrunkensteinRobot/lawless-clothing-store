@@ -1,13 +1,29 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import { Search } from 'lucide-react';
 
-export default function CollectionsFilterClient({ products, categories }: { products: any[], categories: any[] }) {
+export default function CollectionsFilterClient({ products, categories, initialCategory = null }: { products: any[], categories: any[], initialCategory?: string | null }) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory);
+
+  // Sync state with prop if it changes (e.g., navigating back)
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
+
+  const handleCategoryClick = (slug: string | null) => {
+    setSelectedCategory(slug);
+    if (slug) {
+      router.push(`/collections/${slug}`, { scroll: false });
+    } else {
+      router.push(`/collections`, { scroll: false });
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
@@ -24,7 +40,7 @@ export default function CollectionsFilterClient({ products, categories }: { prod
       <div className="flex flex-col md:flex-row gap-4 mb-10 pb-6 border-b border-[#2D2D2D] items-center justify-between">
         <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
           <button
-            onClick={() => setSelectedCategory(null)}
+            onClick={() => handleCategoryClick(null)}
             className={`px-4 py-2 font-sans text-sm tracking-wide transition-colors whitespace-nowrap border ${
               selectedCategory === null ? 'border-[#C0392B] bg-[#C0392B] text-white' : 'border-[#2D2D2D] text-[#9CA3AF] hover:text-white'
             }`}
@@ -34,7 +50,7 @@ export default function CollectionsFilterClient({ products, categories }: { prod
           {categories.map((cat) => (
             <button
               key={cat._id}
-              onClick={() => setSelectedCategory(cat.slug)}
+              onClick={() => handleCategoryClick(cat.slug)}
               className={`px-4 py-2 font-sans text-sm tracking-wide transition-colors whitespace-nowrap border ${
                 selectedCategory === cat.slug ? 'border-[#C0392B] bg-[#C0392B] text-white' : 'border-[#2D2D2D] text-[#9CA3AF] hover:text-white'
               }`}
