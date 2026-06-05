@@ -4,6 +4,8 @@ import { productBySlugQuery } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import ProductDetailClient from '@/components/ProductDetailClient';
 
+export const revalidate = 0;
+
 export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   

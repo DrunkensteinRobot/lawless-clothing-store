@@ -3,6 +3,8 @@ import { client } from '@/sanity/lib/client';
 import { allProductsQuery, categoriesQuery } from '@/sanity/lib/queries';
 import CollectionsFilterClient from '@/components/CollectionsFilterClient';
 
+export const revalidate = 0;
+
 export default async function CollectionsPage() {
   const products = await client.fetch(allProductsQuery);
   const categories = await client.fetch(categoriesQuery);

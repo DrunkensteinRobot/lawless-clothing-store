@@ -5,6 +5,8 @@ import ProductCard from '@/components/ProductCard';
 import { client } from '@/sanity/lib/client';
 import { heroBannerQuery, newArrivalsQuery } from '@/sanity/lib/queries';
 
+export const revalidate = 0;
+
 export default async function Home() {
   const slides = await client.fetch(heroBannerQuery);
   const products = await client.fetch(newArrivalsQuery);
