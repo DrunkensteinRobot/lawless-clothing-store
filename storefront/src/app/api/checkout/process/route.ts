@@ -44,7 +44,7 @@ export async function POST(request: Request) {
       _key: crypto.randomUUID(),
       product: {
         _type: 'reference',
-        _ref: item.id,
+        _ref: item.productId || item.id,
       },
       quantity: item.quantity,
       size: item.size || null,
@@ -69,6 +69,17 @@ export async function POST(request: Request) {
       paymentMethod: 'Paystack (Card/EFT)',
       createdAt: new Date().toISOString(),
     });
+
+    // 4. Decrement stock for each product
+    for (const item of items) {
+      const productId = item.productId || item.id;
+      try {
+        await backendClient.patch(productId).dec({ stock: item.quantity }).commit();
+      } catch (err) {
+        console.error(`Failed to decrement stock for product ${productId}:`, err);
+        // We continue so the user still gets their successful order even if stock decrement fails slightly
+      }
+    }
 
     return NextResponse.json({ success: true, orderId: order._id, orderNumber });
   } catch (error: any) {
