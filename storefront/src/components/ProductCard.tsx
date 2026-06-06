@@ -79,7 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Details */}
       <div className="flex flex-col gap-1">
         <div className="flex justify-between items-start gap-2 sm:gap-4">
-          <Link href={`/products/${product.slug}`} className="font-sans font-semibold text-base sm:text-lg text-white hover:text-[#C0392B] transition-colors line-clamp-1 flex-1">
+          <Link href={`/products/${product.slug}`} className="font-sans font-semibold text-base sm:text-lg text-white hover:text-[#C0392B] transition-colors line-clamp-2 flex-1">
             {product.name}
           </Link>
           <span className="font-accent font-medium text-white text-sm sm:text-base whitespace-nowrap">
